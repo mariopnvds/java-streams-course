@@ -16,24 +16,42 @@ public class Lecture7 {
 
   @Test
   public void count() throws Exception {
-
+    long count = MockData.getPeople()
+            .stream()
+            .filter(person -> person.getGender().equalsIgnoreCase("female"))
+            .count();
+    System.out.println(count);
   }
 
   @Test
   public void min() throws Exception {
-
+    List<Car> cars = MockData.getCars();
+    double min = cars.stream()
+            .filter(car -> car.getColor().equalsIgnoreCase("yellow"))
+            .mapToDouble(Car::getPrice)
+            .min().getAsDouble();
+    System.out.println(min);
   }
 
   @Test
   public void max() throws Exception {
-
+    List<Car> cars = MockData.getCars();
+    double max = cars.stream()
+            .filter(car -> car.getColor().equalsIgnoreCase("yellow"))
+            .mapToDouble(Car::getPrice)
+            .max().getAsDouble();
+    System.out.println(max);
   }
 
 
   @Test
   public void average() throws Exception {
     List<Car> cars = MockData.getCars();
-
+    double avg = cars.stream()
+            .mapToDouble(Car::getPrice)
+            .average().getAsDouble();
+//    .average().orElse(0);
+    System.out.println(avg);
   }
 
   @Test
@@ -45,15 +63,14 @@ public class Lecture7 {
     BigDecimal bigDecimalSum = BigDecimal.valueOf(sum);
     System.out.println(sum);
     System.out.println(bigDecimalSum);
-
   }
 
   @Test
   public void statistics() throws Exception {
     List<Car> cars = MockData.getCars();
     DoubleSummaryStatistics statistics = cars.stream()
-        .mapToDouble(Car::getPrice)
-        .summaryStatistics();
+            .mapToDouble(Car::getPrice)
+            .summaryStatistics();
     System.out.println(statistics);
     System.out.println(statistics.getAverage());
     System.out.println(statistics.getCount());
